@@ -1,10 +1,13 @@
 package com.pluralsight;
 
-import java.io.File;
+import java.io.*;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /*
@@ -30,7 +33,7 @@ public class FinancialTracker {
 
     private static final String DATE_PATTERN = "yyyy-MM-dd";
     private static final String TIME_PATTERN = "HH:mm:ss";
-    private static final String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
+    private static final String DATETIME_PATTERN = DATE_PATTERN + "|" + TIME_PATTERN + "|";
 
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern(DATE_PATTERN);
     private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern(TIME_PATTERN);
@@ -40,13 +43,13 @@ public class FinancialTracker {
        Main menu
        ------------------------------------------------------------------ */
     public static void main(String[] args) {
-        loadTransactions(FILE_NAME);
+        loadTransactions(FILE_NAME, transactions);
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
         while (running) {
-            System.out.println("Welcome to TransactionApp");
+            System.out.println("Welcome to JABOB'S BANKS");
             System.out.println("Choose an option:");
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment (Debit)");
@@ -70,29 +73,56 @@ public class FinancialTracker {
        File I/O
        ------------------------------------------------------------------ */
 
-    /**
-     * Load transactions from FILE_NAME.
-     * • If the file doesn’t exist, create an empty one so that future writes succeed.
-     * • Each line looks like: date|time|description|vendor|amount
-     */
-    public static void loadTransactions(String fileName) {
-        // TODO: create file if it does not exist, then read each line,
-        //       parse the five fields, build a Transaction object,
-        //       and add it to the transactions list.
+
+    public static void loadTransactions(String fileName, ArrayList<Transaction> transactions) {
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String line;
+
+            while((line = reader.readLine()) != null){
+                String[] parts = line.split("\\|");
+                String DATE = parts[0];
+                String TIME = parts[1];
+                String item = parts[2];
+                String vendor = parts[3];
+                double amount = Double.parseDouble(parts[4]);
+                transactions.add(new Transaction(DATE, TIME, item, vendor, amount));
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Something went wrong " + e.getMessage());;
+        }
     }
 
     /* ------------------------------------------------------------------
        Add new transactions
        ------------------------------------------------------------------ */
 
-    /**
-     * Prompt for ONE date+time string in the format
-     * "yyyy-MM-dd HH:mm:ss", plus description, vendor, amount.
-     * Validate that the amount entered is positive.
-     * Store the amount as-is (positive) and append to the file.
-     */
+
     private static void addDeposit(Scanner scanner) {
-        // TODO
+        System.out.println("DEPOSIT");
+        System.out.println("How much money would you like to deposit? ");
+        double amount = scanner.nextDouble();
+        String formatdub = String.format("%.2f", amount);
+        scanner.nextLine();
+
+        if (amount > 0){
+            System.out.println("Thank you for the deposit of " + amount);
+            try{
+                BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
+                writer.write(LocalDateTime.now().format(DATETIME_FMT) + "Deposit|User|" + formatdub);
+                writer.newLine();
+                writer.close();
+
+            } catch (IOException e){
+                System.err.println("Sorry something went wrong. " + e.getMessage());
+            }
+        }
+        else {
+            System.out.println("Sorry that amount is not able to be accepted");
+        }
+
     }
 
     /**
@@ -134,7 +164,12 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Display helpers: show data in neat columns
        ------------------------------------------------------------------ */
-    private static void displayLedger() { /* TODO – print all transactions in column format, newest first */ }
+    private static void displayLedger() {
+        transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
+        for (Transaction transaction : transactions) {
+            System.out.println(transaction);
+        }
+    }
 
     private static void displayDeposits() { /* TODO – only amount > 0               */ }
 
