@@ -31,7 +31,7 @@ public class Transaction {
         return vendor;
     }
 
-    public double cost() {
+    public double amount() {
         return amount;
     }
 

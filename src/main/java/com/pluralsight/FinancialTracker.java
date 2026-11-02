@@ -10,24 +10,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
-/*
- * Capstone skeleton – personal finance tracker.
- * ------------------------------------------------
- * File format  (pipe-delimited)
- *     yyyy-MM-dd|HH:mm:ss|description|vendor|amount
- * A deposit has a positive amount; a payment is stored
- * as a negative amount.
- *
- * TODO: create the Transaction class in this package first.
- *       One object = one line of the file. Decide its fields from
- *       the file format above, add a constructor and getters.
- *       This class does not compile until Transaction exists.
- */
-public class FinancialTracker {
 
-    /* ------------------------------------------------------------------
-       Shared data and formatters
-       ------------------------------------------------------------------ */
+public class FinancialTracker {
     private static final ArrayList<Transaction> transactions = new ArrayList<>();
     private static final String FILE_NAME = "transactions.csv";
 
@@ -39,9 +23,7 @@ public class FinancialTracker {
     private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern(TIME_PATTERN);
     private static final DateTimeFormatter DATETIME_FMT = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
 
-    /* ------------------------------------------------------------------
-       Main menu
-       ------------------------------------------------------------------ */
+
     public static void main(String[] args) {
         loadTransactions(FILE_NAME, transactions);
 
@@ -69,9 +51,6 @@ public class FinancialTracker {
         scanner.close();
     }
 
-    /* ------------------------------------------------------------------
-       File I/O
-       ------------------------------------------------------------------ */
 
 
     public static void loadTransactions(String fileName, ArrayList<Transaction> transactions) {
@@ -95,9 +74,6 @@ public class FinancialTracker {
         }
     }
 
-    /* ------------------------------------------------------------------
-       Add new transactions
-       ------------------------------------------------------------------ */
 
 
     private static void addDeposit(Scanner scanner) {
@@ -127,11 +103,7 @@ public class FinancialTracker {
 
     }
 
-    /**
-     * Same prompts as addDeposit.
-     * Amount must be entered as a positive number,
-     * then converted to a negative amount before storing.
-     */
+    
     private static void addPayment(Scanner scanner) {
         System.out.println("PAYMENT");
         System.out.println("What amount do you have to pay back? (Enter as a positive number) ");
@@ -159,9 +131,7 @@ public class FinancialTracker {
         }
     }
 
-    /* ------------------------------------------------------------------
-       Ledger menu
-       ------------------------------------------------------------------ */
+
     private static void ledgerMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -186,23 +156,39 @@ public class FinancialTracker {
         }
     }
 
-    /* ------------------------------------------------------------------
-       Display helpers: show data in neat columns
-       ------------------------------------------------------------------ */
+
     private static void displayLedger() {
+        loadTransactions("transaction.csv", transactions);
         transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
         for (Transaction transaction : transactions) {
             System.out.println(transaction);
         }
     }
 
-    private static void displayDeposits() { /* TODO – only amount > 0               */ }
+    private static void displayDeposits() {
+            loadTransactions("transactions.csv", transactions);
 
-    private static void displayPayments() { /* TODO – only amount < 0               */ }
+        for (Transaction transaction : transactions) {
+            if (transaction.amount() > 0){
+                System.out.println(transaction);
 
-    /* ------------------------------------------------------------------
-       Reports menu
-       ------------------------------------------------------------------ */
+            }
+        }
+
+    }
+
+    private static void displayPayments() {
+        loadTransactions("transactions.csv", transactions);
+
+        for (Transaction transaction : transactions) {
+            if (transaction.amount() < 0){
+                System.out.println(transaction);
+
+            }
+        }
+    }
+
+
     private static void reportsMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -231,9 +217,6 @@ public class FinancialTracker {
         }
     }
 
-    /* ------------------------------------------------------------------
-       Reporting helpers
-       ------------------------------------------------------------------ */
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         // TODO – iterate transactions, print those within the range
     }
@@ -247,9 +230,6 @@ public class FinancialTracker {
         //        vendor, and exact amount, then display matches
     }
 
-    /* ------------------------------------------------------------------
-       Utility parsers (you can reuse in many places)
-       ------------------------------------------------------------------ */
     private static LocalDate parseDate(String s) {
         /* TODO – return LocalDate or null */
         return null;
