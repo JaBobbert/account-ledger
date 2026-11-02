@@ -61,12 +61,13 @@ public class FinancialTracker {
 
             while((line = reader.readLine()) != null){
                 String[] parts = line.split("\\|");
-                String DATE = parts[0];
-                String TIME = parts[1];
-                String item = parts[2];
+                LocalDate date = LocalDate.parse(parts[0], DATE_FMT);
+                LocalTime time = LocalTime.parse(parts[1], TIME_FMT);
+                String description = parts[2];
                 String vendor = parts[3];
                 double amount = Double.parseDouble(parts[4]);
-                transactions.add(new Transaction(DATE, TIME, item, vendor, amount));
+                transactions.add(new Transaction(date, time, description, vendor, amount));
+                transactions.sort(Comparator.comparing(Transaction::getDateTime));
             }
             reader.close();
         } catch (IOException e) {
@@ -201,7 +202,7 @@ public class FinancialTracker {
                 case "2" -> {prevMonth();}
                 case "3" -> {yearTilNow();}
                 case "4" -> {prevYear();}
-                case "5" -> {/* TODO – prompt for vendor then report */ }
+                case "5" -> {filterTransactionsByVendor(scanner); }
                 case "6" -> customSearch(scanner);
                 case "0" -> running = false;
                 default -> System.out.println("Invalid option");
@@ -219,8 +220,14 @@ public class FinancialTracker {
 
     }
 
-    private static void filterTransactionsByVendor(String vendor) {
-        // TODO – iterate transactions, print those with matching vendor
+    private static void filterTransactionsByVendor(Scanner scanner) {
+        System.out.print("Who would you like to search for? ");
+        String vendor = scanner.nextLine();
+        for (int i = transactions.size()-1; i >= 0; i--) {
+            if (vendor.equalsIgnoreCase(transactions.get(i).vendor())){
+                System.out.println(transactions.get(i));
+            }
+        }
     }
 
     private static void customSearch(Scanner scanner) {
@@ -228,20 +235,13 @@ public class FinancialTracker {
         //        vendor, and exact amount, then display matches
     }
 
-    private static LocalDate parseDate(String s) {
-        return null;
-    }
-
-    private static Double parseDouble(String s) {
-        return null;
-    }
 
     private static void monthTilNow(){
         LocalDate today = LocalDate.now();
         LocalDate oneMonthAgo = today.minusMonths(1);
 
-        for (int i = transactions.size()-1; i >= 0; i--){
-            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+        for (int i = transactions.size()-1; i >= 0; i--){//Make it be able to organize any order correctly
+            LocalDate date = transactions.get(i).date();
 
             if(!date.isBefore(oneMonthAgo) && !date.isAfter(today)){
                 System.out.println(transactions.get(i));
@@ -255,7 +255,7 @@ public class FinancialTracker {
         LocalDate lastDay = today.withDayOfMonth(1).minusDays(1);
 
         for (int i=transactions.size()-1; i >= 0; i--){
-            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+            LocalDate date = transactions.get(i).date();
 
             if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){
                 System.out.println(transactions.get(i));
@@ -268,7 +268,7 @@ public class FinancialTracker {
         LocalDate oneYearAgo = today.minusYears(1);
 
         for (int i = transactions.size()-1; i >= 0; i--){
-            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+            LocalDate date = transactions.get(i).date();
 
             if(!date.isBefore(oneYearAgo) && !date.isAfter(today)){
                 System.out.println(transactions.get(i));
@@ -282,7 +282,7 @@ public class FinancialTracker {
         LocalDate lastDay = today.withDayOfYear(1).minusDays(1);
 
         for (int i=transactions.size()-1; i >= 0; i--){
-            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+            LocalDate date = transactions.get(i).date();
 
             if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){
                 System.out.println(transactions.get(i));
