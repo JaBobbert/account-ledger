@@ -158,32 +158,24 @@ public class FinancialTracker {
 
 
     private static void displayLedger() {
-        loadTransactions("transaction.csv", transactions);
-        transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
-        for (Transaction transaction : transactions) {
-            System.out.println(transaction);
+        for (int i = transactions.size()-1; i >= 0; i--) {
+            System.out.println(transactions.get(i));
         }
     }
 
     private static void displayDeposits() {
-            loadTransactions("transactions.csv", transactions);
-
-        for (Transaction transaction : transactions) {
-            if (transaction.amount() > 0){
-                System.out.println(transaction);
-
+                for (int i = transactions.size()-1; i >= 0; i--) {
+                    if(transactions.get(i).amount() > 0){
+                        System.out.println(transactions.get(i));
+                }
             }
-        }
-
     }
 
     private static void displayPayments() {
-        loadTransactions("transactions.csv", transactions);
 
-        for (Transaction transaction : transactions) {
-            if (transaction.amount() < 0){
-                System.out.println(transaction);
-
+        for (int i = transactions.size()-1; i >= 0; i--) {
+            if(transactions.get(i).amount() < 0){
+                System.out.println(transactions.get(i));
             }
         }
     }
@@ -205,10 +197,10 @@ public class FinancialTracker {
             String input = scanner.nextLine().trim();
 
             switch (input) {
-                case "1" -> {/* TODO – month-to-date report */ }
-                case "2" -> {/* TODO – previous month report */ }
-                case "3" -> {/* TODO – year-to-date report   */ }
-                case "4" -> {/* TODO – previous year report  */ }
+                case "1" -> {monthTilNow();}
+                case "2" -> {prevMonth();}
+                case "3" -> {yearTilNow();}
+                case "4" -> {prevYear();}
                 case "5" -> {/* TODO – prompt for vendor then report */ }
                 case "6" -> customSearch(scanner);
                 case "0" -> running = false;
@@ -217,8 +209,14 @@ public class FinancialTracker {
         }
     }
 
-    private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
-        // TODO – iterate transactions, print those within the range
+    private static void filterTransactionsByDate(LocalDate start, LocalDate end, Scanner scanner) {
+        System.out.print("What date would you like to start from(\"yyyy-MM-dd\")? ");
+        String begin = scanner.nextLine();
+        start = LocalDate.parse(begin, DATE_FMT);
+        System.out.println("What date would you like to end from\"yyyy-MM-dd\")");
+        String finish = scanner.nextLine();
+        end = LocalDate.parse(finish, DATE_FMT);
+
     }
 
     private static void filterTransactionsByVendor(String vendor) {
@@ -231,12 +229,66 @@ public class FinancialTracker {
     }
 
     private static LocalDate parseDate(String s) {
-        /* TODO – return LocalDate or null */
         return null;
     }
 
     private static Double parseDouble(String s) {
-        /* TODO – return Double   or null */
         return null;
     }
+
+    private static void monthTilNow(){
+        LocalDate today = LocalDate.now();
+        LocalDate oneMonthAgo = today.minusMonths(1);
+
+        for (int i = transactions.size()-1; i >= 0; i--){
+            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+
+            if(!date.isBefore(oneMonthAgo) && !date.isAfter(today)){
+                System.out.println(transactions.get(i));
+            }
+        }
+    }
+
+    private static void prevMonth(){
+        LocalDate today = LocalDate.now();
+        LocalDate firstDay = today.minusMonths(1).withDayOfMonth(1);
+        LocalDate lastDay = today.withDayOfMonth(1).minusDays(1);
+
+        for (int i=transactions.size()-1; i >= 0; i--){
+            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+
+            if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){
+                System.out.println(transactions.get(i));
+            }
+        }
+    }
+
+    private static void yearTilNow(){
+        LocalDate today = LocalDate.now();
+        LocalDate oneYearAgo = today.minusYears(1);
+
+        for (int i = transactions.size()-1; i >= 0; i--){
+            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+
+            if(!date.isBefore(oneYearAgo) && !date.isAfter(today)){
+                System.out.println(transactions.get(i));
+            }
+        }
+    }
+
+    private static void prevYear(){
+        LocalDate today = LocalDate.now();
+        LocalDate firstDay = today.minusYears(1).withDayOfYear(1);
+        LocalDate lastDay = today.withDayOfYear(1).minusDays(1);
+
+        for (int i=transactions.size()-1; i >= 0; i--){
+            LocalDate date = LocalDate.parse(transactions.get(i).date(), DATE_FMT);
+
+            if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){
+                System.out.println(transactions.get(i));
+            }
+        }
+
+    }
+
 }

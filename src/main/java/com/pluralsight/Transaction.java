@@ -4,27 +4,27 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Transaction {
-    private String DATE;
-    private String TIME;
+    private String date;
+    private String time;
     private String item;
     private String vendor;
     private double amount;
 
 
-    public Transaction(String DATE, String TIME, String item, String vendor, double amount){
-        this.DATE = DATE;
-        this.TIME = TIME;
+    public Transaction(String date, String time, String item, String vendor, double amount){
+        this.date = date;
+        this.time = time;
         this.item = item;
         this.vendor = vendor;
         this.amount = amount;
     }
 
-    public String DATE() {
-        return DATE;
+    public String date() {
+        return date;
     }
 
-    public String TIME() {
-        return TIME;
+    public String time() {
+        return time;
     }
 
     public String vendor() {
@@ -40,12 +40,12 @@ public class Transaction {
     }
 
     public LocalDateTime getDateTime(){
-        return LocalDateTime.parse(DATE + "|" + TIME, DateTimeFormatter.ISO_DATE_TIME);
+        return LocalDateTime.parse(date + "|" + time, DateTimeFormatter.ISO_DATE_TIME);
     }
 
     @Override
     public String toString() {
-        return DATE + "|" + TIME + "|" + item + "|" + vendor + "|" + amount;
+        return date + "|" + time + "|" + item + "|" + vendor + "|" + amount;
     }
 }
 
