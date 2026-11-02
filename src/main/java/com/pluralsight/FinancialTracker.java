@@ -106,12 +106,14 @@ public class FinancialTracker {
         double amount = scanner.nextDouble();
         String formatdub = String.format("%.2f", amount);
         scanner.nextLine();
+        System.out.print("Who is paying you back? ");
+        String vendor = scanner.nextLine();
 
         if (amount > 0){
             System.out.println("Thank you for the deposit of " + amount);
             try{
                 BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-                writer.write(LocalDateTime.now().format(DATETIME_FMT) + "Deposit|User|" + formatdub);
+                writer.write(LocalDateTime.now().format(DATETIME_FMT) + "deposit|" + vendor + "|" + formatdub);
                 writer.newLine();
                 writer.close();
 
@@ -131,7 +133,30 @@ public class FinancialTracker {
      * then converted to a negative amount before storing.
      */
     private static void addPayment(Scanner scanner) {
-        // TODO
+        System.out.println("PAYMENT");
+        System.out.println("What amount do you have to pay back? (Enter as a positive number) ");
+        double posToNeg = scanner.nextDouble();
+        double amount = posToNeg*(-1);
+        String formatdub = String.format("%.2f", amount);
+        scanner.nextLine();
+        System.out.print("Who or what is receiving the money? ");
+        String vendor = scanner.nextLine();
+
+        if (amount < 0){
+            System.out.println("The debt owed is " + amount);
+            try{
+                BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
+                writer.write(LocalDateTime.now().format(DATETIME_FMT) + "Payment|" + vendor + "|" + formatdub);
+                writer.newLine();
+                writer.close();
+
+            } catch (IOException e){
+                System.err.println("Sorry something went wrong. " + e.getMessage());
+            }
+        }
+        else {
+            System.out.println("Sorry that amount can't be owed.");
+        }
     }
 
     /* ------------------------------------------------------------------
