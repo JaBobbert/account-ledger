@@ -86,6 +86,12 @@ public class FinancialTracker {
         String vendor = scanner.nextLine();
 
         if (amount > 0){
+            LocalDate today = LocalDate.now();
+            LocalTime time = LocalTime.now();
+
+            Transaction deposit = new Transaction(today, time, "deposit", vendor, amount);
+            transactions.add(deposit);
+
             System.out.println("Thank you for the deposit of " + amount);
             try{
                 BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
@@ -111,11 +117,19 @@ public class FinancialTracker {
         double amount = posToNeg*(-1);
         String formatdub = String.format("%.2f", amount);
         scanner.nextLine();
+
         System.out.print("Who or what is receiving the money? ");
         String vendor = scanner.nextLine();
 
         if (amount < 0){
             System.out.println("The debt owed is " + amount);
+
+            LocalDate today = LocalDate.now();
+            LocalTime time = LocalTime.now();
+
+            Transaction payment = new Transaction(today, time, "Payment", vendor, amount);
+            transactions.add(payment);
+
             try{
                 BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
                 writer.write(LocalDateTime.now().format(DATETIME_FMT) + "Payment|" + vendor + "|" + formatdub);
