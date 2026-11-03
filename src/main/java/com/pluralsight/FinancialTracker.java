@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -231,8 +230,46 @@ public class FinancialTracker {
     }
 
     private static void customSearch(Scanner scanner) {
-        // TODO – prompt for any combination of date range, description,
-        //        vendor, and exact amount, then display matches
+        System.out.println("Enter a date (MM-dd-yyyy) or press Enter to skip:");
+        String dateInput = scanner.nextLine();
+        LocalDate userDate = null;
+
+            if (!dateInput.isEmpty()) {
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+                userDate = LocalDate.parse(dateInput, format);
+            }
+
+            System.out.println("Enter a description or press Enter to skip:");
+            String description = scanner.nextLine();
+
+            System.out.println("Enter a vendor or press Enter to skip:");
+            String vendor = scanner.nextLine();
+
+            System.out.println("Enter an exact amount or press Enter to skip:");
+            String amountInput = scanner.nextLine();
+            Double amount = null;
+
+            if (!amountInput.isEmpty()) {
+                amount = Double.parseDouble(amountInput);
+            }
+
+            boolean found = false;
+            for (int i = transactions.size() - 1; i >= 0; i--) {
+                Transaction transaction = transactions.get(i);
+
+                if ((userDate == null || userDate.equals(transaction.date())) &&
+                        (description.isEmpty() || description.equalsIgnoreCase(transaction.description())) &&
+                        (vendor.isEmpty() || vendor.equalsIgnoreCase(transaction.vendor())) &&
+                        (amount == null || amount == transaction.amount())) {
+
+                    System.out.println(transaction);
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                System.out.println("No transactions found.");
+            }
     }
 
 
