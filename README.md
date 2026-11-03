@@ -1,4 +1,5 @@
-# Project Title
+# Accounting Ledger
+This code is used to store and retrieve bank like statements such as payments or deposits.
 
 <!-- HOW TO USE THIS TEMPLATE
      Save it as README.md at the root of your project, next to pom.xml. Replace every comment like this one
@@ -13,14 +14,10 @@
 
 <!-- Three to five sentences. What the application does, who uses it, what problem it solves.
      Write it for someone who has never seen the workbook: a recruiter, a classmate, you in six months. -->
+Places information like Bank deposits into a csv file. Searches and finds the date and time the information was stored.
+Can search for specific dates and then shows user the information they were looking for. Places date and time whenever
+you store the payment or deposit.
 
-## Class Diagram
-
-<!-- OPTIONAL. Only when the project asks for one (Capstone 2 onward). Export the diagram as a PNG into the
-     images folder and keep the line below. If your project has no class diagram, delete this whole section,
-     heading included. -->
-
-![Class Diagram](images/class-diagram.png)
 
 ## Features
 
@@ -30,10 +27,9 @@
      Example:
      - Shows every product in the store
      - Searches products by name (bonus) -->
-
--
--
--
+-Shows every bank statement
+-Seaches by vendor, date, or amount
+-Stores information into a csv file
 
 ## User Stories
 
@@ -41,8 +37,8 @@
      As a [type of user], I want [some goal] so that [some reason].
      Same text as the cards on your GitHub project board. -->
 
-- As a ..., I want ..., so that ...
-- As a ..., I want ..., so that ...
+- As a user, I want to keep track of my payments, so that I know how much money I owe
+- As a user, I want to have a file of where I can store my bank status information, so that I can stay well organized
 
 ## Setup
 
@@ -56,8 +52,8 @@
 1. Clone this repository, or download it as a zip and unzip it.
 2. In IntelliJ: File > Open, pick the project folder (the one that holds `pom.xml`), press Open.
 3. Wait for IntelliJ to finish indexing (progress bar at the bottom).
-4. Open `src/main/java/com/pluralsight/YourMainClassName.java`. <!-- replace YourMainClassName with the class that has main -->
-5. Right-click inside the file and choose Run 'YourMainClassName.main()'.
+4. Open `src/main/java/com/pluralsight/FinancialTracker.java`. <!-- replace YourMainClassName with the class that has main -->
+5. Right-click inside the file and choose Run 'FinancialTracker.java`()'.
 
 ### Data and configuration
 
@@ -68,7 +64,8 @@
      - `inventory.csv` sits at the project root, next to `pom.xml`. The program reads it at start.
      - `logs.txt` is created by the program at the project root on the first run. -->
 
--
+-transactions.csv is either stored or created from the beginning since it already has data in it. 
+But it could also add data to it.
 
 ## Technologies Used
 
@@ -123,7 +120,7 @@
 
 <!-- Your name and, if you like, your GitHub profile link. For a team workshop, one line per person with what each one built. -->
 
-- **Your Name**
+- **Jacob Davis**
 
 ## Thanks
 
