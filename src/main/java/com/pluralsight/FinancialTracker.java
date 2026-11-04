@@ -335,7 +335,7 @@ public class FinancialTracker {
         for (int i=transactions.size()-1; i >= 0; i--){
             LocalDate date = transactions.get(i).date();
 
-            if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){
+            if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){//Clears all before the year and all after the previous year
                 System.out.println(transactions.get(i));
             }
         }

@@ -27,9 +27,9 @@ you store the payment or deposit.
      Example:
      - Shows every product in the store
      - Searches products by name (bonus) -->
--Shows every bank statement
--Seaches by vendor, date, or amount
--Stores information into a csv file
+-Shows every bank statement.
+Searches by vendor, date, or amount.
+Stores information into a csv file.
 
 ## User Stories
 
@@ -88,9 +88,11 @@ But it could also add data to it.
      Optional GIF: LICEcap (free, Windows and Mac, <https://www.cockos.com/licecap/>) records a region of the
      screen straight to a .gif. Keep it under 10 seconds and under 10 MB, save it into `images`. -->
 
-![Main menu](images/menu.png)
+![Main menu](![image-menu.png.png](../../../../Pictures/Screenshots/image-menu.png.png))
 
-![One feature in action](images/feature.png)
+![Home Page](![image-home.png.png](../../../../Pictures/Screenshots/image-home.png.png))
+
+![One feature in action](![image-search.png.png](../../../../Pictures/Screenshots/image-search.png.png))
 
 ## A piece of code I am proud of
 
