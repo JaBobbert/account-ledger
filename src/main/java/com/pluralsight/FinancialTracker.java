@@ -174,15 +174,16 @@ public class FinancialTracker {
     private static void displayLedger() {
         for (int i = transactions.size()-1; i >= 0; i--) {
             System.out.println(transactions.get(i));
-        }
+        }// for i
     }
 
     private static void displayDeposits() {
-                for (int i = transactions.size()-1; i >= 0; i--) {
-                    if(transactions.get(i).amount() > 0){
-                        System.out.println(transactions.get(i));
+
+            for (Transaction transaction : transactions) {
+                if (transaction.amount() > 0) {
+                    System.out.println(transaction);
                 }
-            }
+        }//iter aka for each
     }
 
     private static void displayPayments() {
