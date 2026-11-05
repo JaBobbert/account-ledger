@@ -30,7 +30,21 @@ public class FinancialTracker {
         boolean running = true;
 
         while (running) {
-            System.out.println("Welcome to JABOB'S BANKS");
+            System.out.println();
+            System.out.println("************************************************************");
+            System.out.println("*                                                          *");
+            System.out.println("*                                                          *");
+            System.out.println("*        JJJJJ   AAAAA   BBBBB    OOOOO   BBBBB            *");
+            System.out.println("*          J    A     A  B    B  O     O  B    B           *");
+            System.out.println("*          J    AAAAAAA  BBBBB   O     O  BBBBB            *");
+            System.out.println("*       J  J    A     A  B    B  O     O  B    B           *");
+            System.out.println("*        JJ     A     A  BBBBB    OOOOO   BBBBB            *");
+            System.out.println("*                                                          *");
+            System.out.println("*                    JABOB'S BANK                          *");
+            System.out.println("*                                                          *");
+            System.out.println("*             YOUR MONEY. YOUR FUTURE.                     *");
+            System.out.println("*                                                          *");
+            System.out.println("************************************************************");
             System.out.println("Choose an option:");
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment (Debit)");
