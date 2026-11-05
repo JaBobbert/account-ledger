@@ -237,11 +237,11 @@ public class FinancialTracker {
     private static void filterTransactionsByVendor(Scanner scanner) {
         System.out.print("Who would you like to search for? ");
         String vendor = scanner.nextLine();
-        for (int i = transactions.size()-1; i >= 0; i--) {
-            if (vendor.equalsIgnoreCase(transactions.get(i).vendor())){
-                System.out.println(transactions.get(i));
+        for (Transaction transaction : transactions) {
+            if (vendor.equalsIgnoreCase(transaction.vendor())) {
+                System.out.println(transaction);
             }
-        }
+        }//Best practice is a for each
     }
 
     private static void customSearch(Scanner scanner) {
@@ -269,9 +269,7 @@ public class FinancialTracker {
             }
 
             boolean found = false;
-            for (int i = transactions.size() - 1; i >= 0; i--) {
-                Transaction transaction = transactions.get(i);
-
+            for (Transaction transaction : transactions){
                 if ((userDate == null || userDate.equals(transaction.date())) &&
                         (description.isEmpty() || description.equalsIgnoreCase(transaction.description())) &&
                         (vendor.isEmpty() || vendor.equalsIgnoreCase(transaction.vendor())) &&
@@ -319,11 +317,11 @@ public class FinancialTracker {
         LocalDate today = LocalDate.now();
         LocalDate oneYearAgo = today.minusYears(1);
 
-        for (int i = transactions.size()-1; i >= 0; i--){
-            LocalDate date = transactions.get(i).date();
+        for (Transaction transaction : transactions) {
+            LocalDate date = transaction.date();
 
             if(!date.isBefore(oneYearAgo) && !date.isAfter(today)){
-                System.out.println(transactions.get(i));
+                System.out.println(transaction);
             }
         }
     }
