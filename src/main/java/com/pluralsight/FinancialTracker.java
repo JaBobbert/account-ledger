@@ -163,7 +163,7 @@ public class FinancialTracker {
     private static void ledgerMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
-            System.out.println("Ledger");
+            System.out.println("LEDGER");
             System.out.println("Choose an option:");
             System.out.println("A) All");
             System.out.println("D) Deposits");
@@ -186,6 +186,7 @@ public class FinancialTracker {
 
 
     private static void displayLedger() {
+        System.out.println("ALL:");
         for (int i = transactions.size()-1; i >= 0; i--) {
             System.out.println(transactions.get(i));
         }// for i
@@ -193,6 +194,7 @@ public class FinancialTracker {
 
     private static void displayDeposits() {
 
+        System.out.println("DEPOSITS:");
             for (Transaction transaction : transactions) {
                 if (transaction.amount() > 0) {
                     System.out.println(transaction);
@@ -202,6 +204,7 @@ public class FinancialTracker {
 
     private static void displayPayments() {
 
+        System.out.println("PAYMENTS:");
         for (int i = transactions.size()-1; i >= 0; i--) {
             if(transactions.get(i).amount() < 0){
                 System.out.println(transactions.get(i));
@@ -239,6 +242,7 @@ public class FinancialTracker {
     }
 
     private static void filterTransactionsByDate(LocalDate start, LocalDate end, Scanner scanner) {
+        System.out.println("SEARCH BY DATE");
         System.out.print("What date would you like to start from(\"yyyy-MM-dd\")? ");
         String begin = scanner.nextLine();
         start = LocalDate.parse(begin, DATE_FMT);
@@ -249,6 +253,7 @@ public class FinancialTracker {
     }
 
     private static void filterTransactionsByVendor(Scanner scanner) {
+        System.out.println("SEARCH BY VENDOR");
         System.out.print("Who would you like to search for? ");
         String vendor = scanner.nextLine();
         for (Transaction transaction : transactions) {
@@ -303,6 +308,7 @@ public class FinancialTracker {
     private static void monthTilNow(){
         LocalDate today = LocalDate.now();
         LocalDate oneMonthAgo = today.minusMonths(1);
+        System.out.println("PREVIOUS MONTH TILL NOW");
 
         for (int i = transactions.size()-1; i >= 0; i--){//Make it be able to organize any order correctly
             LocalDate date = transactions.get(i).date();
@@ -317,6 +323,7 @@ public class FinancialTracker {
         LocalDate today = LocalDate.now();
         LocalDate firstDay = today.minusMonths(1).withDayOfMonth(1);
         LocalDate lastDay = today.withDayOfMonth(1).minusDays(1);
+        System.out.println("PREVIOUS MONTH");
 
         for (int i=transactions.size()-1; i >= 0; i--){
             LocalDate date = transactions.get(i).date();
@@ -330,6 +337,7 @@ public class FinancialTracker {
     private static void yearTilNow(){
         LocalDate today = LocalDate.now();
         LocalDate oneYearAgo = today.minusYears(1);
+        System.out.println("PREVIOUS YEAR TILL NOW");
 
         for (Transaction transaction : transactions) {
             LocalDate date = transaction.date();
@@ -344,6 +352,7 @@ public class FinancialTracker {
         LocalDate today = LocalDate.now();
         LocalDate firstDay = today.minusYears(1).withDayOfYear(1);
         LocalDate lastDay = today.withDayOfYear(1).minusDays(1);
+        System.out.println("PREVIOUS YEAR");
 
         for (int i=transactions.size()-1; i >= 0; i--){
             LocalDate date = transactions.get(i).date();
