@@ -80,7 +80,7 @@ public class FinancialTracker {
                 String vendor = parts[3];
                 double amount = Double.parseDouble(parts[4]);
                 transactions.add(new Transaction(date, time, description, vendor, amount));
-                transactions.sort(Comparator.comparing(Transaction::getDateTime));
+                transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
             }
             reader.close();
         } catch (IOException e) {
@@ -187,9 +187,9 @@ public class FinancialTracker {
 
     private static void displayLedger() {
         System.out.println("ALL:");
-        for (int i = transactions.size()-1; i >= 0; i--) {
-            System.out.println(transactions.get(i));
-        }// for i
+        for (Transaction transaction : transactions) {
+            System.out.println(transaction);
+        }
     }
 
     private static void displayDeposits() {
@@ -205,9 +205,9 @@ public class FinancialTracker {
     private static void displayPayments() {
 
         System.out.println("PAYMENTS:");
-        for (int i = transactions.size()-1; i >= 0; i--) {
-            if(transactions.get(i).amount() < 0){
-                System.out.println(transactions.get(i));
+        for (Transaction transaction : transactions) {
+            if (transaction.amount() < 0) {
+                System.out.println(transaction);
             }
         }
     }
@@ -310,11 +310,12 @@ public class FinancialTracker {
         LocalDate oneMonthAgo = today.minusMonths(1);
         System.out.println("PREVIOUS MONTH TILL NOW");
 
-        for (int i = transactions.size()-1; i >= 0; i--){//Make it be able to organize any order correctly
-            LocalDate date = transactions.get(i).date();
+        //Make it be able to organize any order correctly
+        for (Transaction transaction : transactions) {
+            LocalDate date = transaction.date();
 
             if(!date.isBefore(oneMonthAgo) && !date.isAfter(today)){
-                System.out.println(transactions.get(i));
+                System.out.println(transaction);
             }
         }
     }
@@ -325,11 +326,11 @@ public class FinancialTracker {
         LocalDate lastDay = today.withDayOfMonth(1).minusDays(1);
         System.out.println("PREVIOUS MONTH");
 
-        for (int i=transactions.size()-1; i >= 0; i--){
-            LocalDate date = transactions.get(i).date();
+        for (Transaction transaction : transactions) {
+            LocalDate date = transaction.date();
 
             if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){
-                System.out.println(transactions.get(i));
+                System.out.println(transaction);
             }
         }
     }
@@ -354,11 +355,11 @@ public class FinancialTracker {
         LocalDate lastDay = today.withDayOfYear(1).minusDays(1);
         System.out.println("PREVIOUS YEAR");
 
-        for (int i=transactions.size()-1; i >= 0; i--){
-            LocalDate date = transactions.get(i).date();
+        for (Transaction transaction : transactions) {
+            LocalDate date = transaction.date();
 
             if(!date.isBefore(firstDay) && !date.isAfter(lastDay)){//Clears all before the year and all after the previous year
-                System.out.println(transactions.get(i));
+                System.out.println(transaction);
             }
         }
 
