@@ -100,6 +100,7 @@ But it could also add data to it.
      or three sentences: what it does and why you chose to write it that way. This is what you show on
      demo day and what you talk about in an interview. -->
 ![img_1.png](images/img_1.png)
+-A large clump of code that has the ability to give the user the chance to custom search.
 
 
 ## Future Work
@@ -108,6 +109,7 @@ But it could also add data to it.
 
 -More style to the pages.
 Making users be able to print dates
+Clean up the for and fori ones to make all them for each
 
 ## Resources
 
