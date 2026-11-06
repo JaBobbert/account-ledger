@@ -287,7 +287,7 @@ public class FinancialTracker {
                 amount = Double.parseDouble(amountInput);
             }
 
-            boolean found = false;
+            boolean here = false;
             for (Transaction transaction : transactions){
                 if ((userDate == null || userDate.equals(transaction.date())) &&
                         (description.isEmpty() || description.equalsIgnoreCase(transaction.description())) &&
@@ -295,12 +295,12 @@ public class FinancialTracker {
                         (amount == null || amount == transaction.amount())) {
 
                     System.out.println(transaction);
-                    found = true;
+                    here = true;
                 }
             }
 
-            if (!found) {
-                System.out.println("No transactions found.");
+            if (!here) {
+                System.out.println("No information found here.");
             }
     }
 
