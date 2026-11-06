@@ -88,28 +88,26 @@ But it could also add data to it.
      Optional GIF: LICEcap (free, Windows and Mac, <https://www.cockos.com/licecap/>) records a region of the
      screen straight to a .gif. Keep it under 10 seconds and under 10 MB, save it into `images`. -->
 
-![Main menu](![image-menu.png.png](../../../../Pictures/Screenshots/image-menu.png.png))
+![img.png](images/img.png)
 
-![Home Page](![image-home.png.png](../../../../Pictures/Screenshots/image-home.png.png))
+![image-home.png.png](images/image-home.png.png)
 
-![One feature in action](![image-search.png.png](../../../../Pictures/Screenshots/image-search.png.png))
+![image-search.png.png](images/image-search.png.png)
 
 ## A piece of code I am proud of
 
 <!-- Paste one short block of your own code (5 to 15 lines) between the three backticks, then write two
      or three sentences: what it does and why you chose to write it that way. This is what you show on
      demo day and what you talk about in an interview. -->
+![img_1.png](images/img_1.png)
 
-```java
-
-```
 
 ## Future Work
 
 <!-- What you would add or fix next, one bullet each. Unfinished bonuses belong here. -->
 
--
--
+-More style to the pages.
+Making users be able to print dates
 
 ## Resources
 
@@ -128,4 +126,4 @@ But it could also add data to it.
 
 <!-- Optional. The people who helped: the instructor, a classmate who debugged with you, a mentor. -->
 
-- Thank you to ... for ...
+- Thank you
